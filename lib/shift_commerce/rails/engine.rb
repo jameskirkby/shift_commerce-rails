@@ -2,15 +2,24 @@ module ShiftCommerce
   module Rails
     class Engine < ::Rails::Engine
       isolate_namespace ShiftCommerce::Rails
+
+      initializer('shift_commerce-rails', after: :load_config_initializers) do |app|
+        Rails.application.routes.prepend do
+          mount ShiftCommerce::Rails::Engine, at: '/'
+        end
+      end
+      
       initializer "shift_commerce-rails.set_helpers_path", before: "action_controller.set_helpers_path" do |app|
         app.config.helpers_paths.unshift File.expand_path("../../../app/helpers", __dir__)
       end
+
       initializer "better_errors.configure_rails_initialization" do |app|
         if use_error_handler? && using_better_errors?
           #insert_middleware(app)
           app.middleware.swap BetterErrors::Middleware, BetterErrors::Middleware, BetterErrorPage
         end
       end
+
       def insert_middleware(app)
         app.middleware.insert_before ActionDispatch::Cookies, ErrorMiddleware
       end
@@ -26,7 +35,6 @@ module ShiftCommerce
       def using_better_errors?
         Object.const_defined?("BetterErrors")
       end
-
     end
   end
 end
