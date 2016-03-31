@@ -4,6 +4,7 @@ module ShiftCommerce
       def self.flex_template_dir
         File.expand_path(File.join("templates"), __dir__)
       end
+
       def self.flex_variable_info_template
         template_name = "variable_info"
         template = File.read(File.join(flex_template_dir, "flex_variables.erb"))
@@ -21,10 +22,10 @@ module ShiftCommerce
       end
 
       private
+      
       def is_a_flex_exception?
         @exception.exception.is_a? ::FlexCommerce::Error::Base
       end
-
     end
   end
 end
