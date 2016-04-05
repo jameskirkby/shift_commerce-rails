@@ -1,0 +1,15 @@
+<aside class="category-navigation>
+  <nav class="navbar navbar-default" data-behavior="category_navigation">
+    <div class="container-fluid">
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <% menu_items_for("sidebar").each do |menu_item| %>
+              <%= render partial: "shift_commerce/rails/shared/menu_item", locals: { menu_item: menu_item } %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</aside>

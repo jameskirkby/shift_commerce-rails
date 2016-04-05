@@ -1,0 +1,53 @@
+I"n(function() {
+  var stringStartsWith;
+
+  stringStartsWith = function(string, prefix) {
+    return string.slice(0, prefix.length) === prefix;
+  };
+
+  $(document).on('ready page:load', function(event) {
+    var index, items, proxyForBackend, tmp;
+    proxyForBackend = new Bloodhound({
+      datumTokenizer: function(d) {
+        return Bloodhound.tokenizers.whitespace(d.isim);
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+        url: '/suggestive_search/search',
+        ajax: {
+          type: 'GET'
+        },
+        replace: function(url, query) {
+          return url + '?field_name=title&suggestion=' + query;
+        }
+      }
+    });
+    proxyForBackend.initialize();
+    items = document.location.search.substr(1).split("&");
+    index = 0;
+    while (index < items.length) {
+      tmp = items[index].split('=');
+      if (stringStartsWith(tmp[0], '_facet_')) {
+        document.getElementById(decodeURI(tmp[0])).checked = true;
+        document.getElementById(decodeURI(tmp[0])).value = tmp[1];
+      }
+      index++;
+    }
+    return $('.typeahead').typeahead({
+      hint: false,
+      highlight: true,
+      minLength: 1
+    }, {
+      name: 'proxyForBackend',
+      source: proxyForBackend.ttAdapter()
+    });
+  });
+
+  $(function() {
+    $('a, button').click(function() {
+      $(this).toggleClass('active');
+    });
+  });
+
+}).call(this);
+:ET

@@ -3,7 +3,7 @@
 #
 # Limits access to the site when ENV['SITE_PASSWORD'] is set
 #
-module HoldingPageProtection
+module ShiftCommerce::Rails::Concerns::HoldingPageProtection
   extend ActiveSupport::Concern
 
   included do

@@ -1,0 +1,12 @@
+<%= simple_form_for(FlexCommerce::LineItem.new(item_id: variant.id, item_type: "Variant", unit_quantity: 1), as: :line_item, url: cart_line_items_path, class: "pricing__form", data: { behaviour: "add_to_basket_form" }) do |f| %>
+  <div class="form-group">
+    <div data-behavior="product_variant_selector">
+      <%= f.label(:item_id, t(".variant")) %>
+      <%= f.select(:item_id, product.variants.map { |v| ["#{v.title} - #{number_to_currency(v.price)}", v.id] }) %>
+      <%= f.hidden_field(:item_type) %>
+    </div>
+    <%= f.label(:unit_quantity, "Quantity") %>
+    <%= f.number_field(:unit_quantity, min: 1, step: 1, pattern: "\\d*", class: "form-control", required: "required") %>
+  </div>
+  <%= f.submit value: t("products.show.submit_button"), class: "btn btn-lg btn-block btn-primary", data: { action: "add_to_basket" } %>
+<% end %>

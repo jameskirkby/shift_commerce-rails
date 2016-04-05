@@ -1,0 +1,92 @@
+<li class="dropdown mini-basket" data-behavior="mini_basket">
+  <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-action="expand">
+    <%= t(".my_basket") %>
+    <% unless open_cart.line_items.empty? %>
+        <span class="badge" data-attribute="basket_count"><%= open_cart.line_items.count %></span>
+    <% end %>
+    <span class="caret"></span></a>
+  <ul class="dropdown-menu" data-behavior="mini_basket_contents">
+    <h3><%= t(".my_basket") %></h3>
+
+    <% if open_cart.line_items.empty? %>
+        <p><%= t(".empty_basket") %></p>
+    <% else %>
+        <table>
+          <thead>
+          <tr>
+            <th colspan="2"><%= t("carts.show.item_header") %></th>
+            <th><%= t("carts.show.quantity_header") %></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% open_cart.line_items.each do |line_item| %>
+              <tr data-behavior="cart_line_item">
+                <td>
+                  <a href="/products/essentials-meridian-toilet-soft-close-seat-cistern">
+                    <picture>
+                      <source srcset="//cdn.shopify.com/s/files/1/0845/2185/products/NCH500-NCH401-Meridian-Pan-Cistern-CO_5f1c6ac2-f2fe-49fc-b418-f3c4f07aa7f1_thumb.png?v=1437488858 1x, //cdn.shopify.com/s/files/1/0845/2185/products/NCH500-NCH401-Meridian-Pan-Cistern-CO_5f1c6ac2-f2fe-49fc-b418-f3c4f07aa7f1_small.png?v=1437488858 2x" media="(max-width: 599px)">
+                      <img src="//cdn.shopify.com/s/files/1/0845/2185/products/NCH500-NCH401-Meridian-Pan-Cistern-CO_5f1c6ac2-f2fe-49fc-b418-f3c4f07aa7f1_thumb.png?v=1437488858" srcset="//cdn.shopify.com/s/files/1/0845/2185/products/NCH500-NCH401-Meridian-Pan-Cistern-CO_5f1c6ac2-f2fe-49fc-b418-f3c4f07aa7f1_small.png?v=1437488858 2x" alt="Photo of Meridian Toilet with Soft-Close Seat, Cistern &amp; Fixing Kit">
+                    </picture>
+                  </a>
+                </td>
+                <th>
+                  <p>
+                    <a href="/products/essentials-meridian-toilet-soft-close-seat-cistern">
+                      <%= line_item.title %>
+                    </a>
+                  </p>
+                  <p>
+                    <%= line_item.unit_price %>
+                  </p>
+                </th>
+                <td>
+                  <%= line_item.unit_quantity %>
+                </td>
+              </tr>
+          <% end %>
+          <% open_cart.discount_summaries.each do |summary| %>
+              <tr data-behavior="cart_discount_summary">
+                <td></td>
+                <td data-attribute="name"><%= summary.name %></td>
+                <td data-attribute="total"><%= number_to_currency(summary.total) %></td>
+              </tr>
+          <% end %>
+
+          </tbody>
+        </table>
+        <div data-behavior="mini_basket_summary" class="pull-right">
+          <dl>
+            <dt>
+              <%= t("carts.show.sub_total") %>
+            </dt>
+            <dd data-attribute="sub_total">
+              <%= number_to_currency(open_cart.sub_total) %>
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              <%= t("carts.show.total_discount") %>
+            </dt>
+            <dd data-attribute="total_discount">
+              <%= number_to_currency(open_cart.total_discount) %>
+            </dd>
+          </dl>
+          <dl>
+            <dt>
+              Total
+            </dt>
+            <dd data-attribute="total">
+              <%= number_to_currency(open_cart.total) %>
+            </dd>
+          </dl>
+        </div>
+    <% end %>
+    <li>
+      <%= link_to t(".edit_basket"), main_app.cart_path, class: "btn btn-default",data: { action: :edit_basket } %>
+    </li>
+    <li role="separator" class="divider"></li>
+    <li>
+      <%= link_to t(".checkout"), edit_cart_path, class: "btn btn-success", data: { action: :checkout } %>
+    </li>
+  </ul>
+</li>

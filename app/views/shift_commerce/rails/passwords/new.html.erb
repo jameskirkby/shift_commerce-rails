@@ -1,0 +1,19 @@
+<div class="container-fluid" data-behavior="account_new_password_view">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+      <h1><%= t(".page_title") %></h1>
+      <%= simple_form_for(password, url: url_for(action: :create, only_path: true)) do |f| %>
+          <div class="form-group">
+            <%= f.label(:password, class: "sr-only", required: true) %>
+            <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
+            <%= f.error :password, data: { behavior: :password_field_error } %>
+            <%= f.hidden_field :email %>
+            <%= f.hidden_field :reset_password_token %>
+          </div>
+          <footer class="login_form__footer">
+            <%= f.submit t(".submit_button"), class: "btn btn-primary btn-block", data: { behavior: "reset_password_button" } %>
+          </footer>
+      <% end %>
+    </div>
+  </div>
+</div>

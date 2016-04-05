@@ -1,0 +1,16 @@
+<% if current_account.nil? %>
+    <li data-behavior="customer_account">
+      <a data-action="login" href="/account/login"><%= t(".login") %></a>
+    </li>
+<% else %>
+    <li class="dropdown" data-behavior="customer_account">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" data-action="expand"><%= t(".my_account") %><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><%= link_to t(".my_account"), edit_account_path %></li>
+        <li><%= link_to t(".my_addresses"), account_addresses_path %></li>
+        <li><%= link_to t(".my_order_history"), account_orders_path %></li>
+        <li role="separator" class="divider"></li>
+        <li><a data-action="logout" href="/account/logout" class="btn btn-warning"><%= t(".logout") %></a></li>
+      </ul>
+    </li>
+<% end %>

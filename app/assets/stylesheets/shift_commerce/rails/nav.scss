@@ -1,0 +1,19 @@
+@media (min-width: 768px) {
+  .category-navigation {
+    nav {
+      ul {
+        li {
+
+        }
+      }
+    }
+  }
+}
+
+ul.nav li:first-child {
+  #color: red;
+  #font-size: bold;
+  #background: yellow;
+  #padding-left:110;
+  #margin-left:110;
+}

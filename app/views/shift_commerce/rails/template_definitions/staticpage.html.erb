@@ -1,0 +1,13 @@
+<div class="container-fluid static_page_show" data-behavior="static_page_view_for_example_template">
+  <div data-behavior="static_page_content">
+    <%= static_page.body_content.html_safe %>
+  </div>
+  <div>
+    <p>This is a custom template for the "StaticPage" template definition and has "colour" and "size" added to it</p>
+    <h4>Colour:</h4>
+    <span data-attribute="colour"><%= static_page.template_attributes.fetch(:colour, "not set").html_safe %></span>
+    <h4>Size</h4>
+    <span data-attribute="size"><%= static_page.template_attributes.fetch(:size, "not set") %></span>
+  </div>
+
+</div>

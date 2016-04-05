@@ -1,0 +1,18 @@
+<div data-behavior="address">
+  <h4>Shipping Address</h4>
+  <% if current_account.present? %>
+      <div class="form-group">
+        <%= f.label(:shipping_address_id, required: true) %>
+        <%= f.select :shipping_address_id, current_account.addresses.select {|a| countries.map(&:code).include?(a.country) }.collect { |addrress| ["#{addrress.first_name} #{addrress.middle_names} #{addrress.last_name}  #{addrress.address_line_1} #{addrress.postcode}", addrress.id ] }, { include_blank: t(".choose_shipping_address") }, class: "form-control", data: { action: "select_saved_address", scope: "checkout_shipping_address" } %>
+        <%= f.error :shipping_address_id, data: { behavior: :shipping_address_id_field_error } %>
+      </div>
+      <div class="form-group" data-action="allow_edit_shipping_address">
+        <%= f.label(:allow_edit_shipping_address) %>
+        <%= f.check_box :allow_edit_shipping_address %>
+        <%= f.error :allow_edit_shipping_address, data: { behavior: :allow_edit_shipping_address_field_error } %>
+      </div>
+  <% end %>
+  <%= f.fields_for :shipping_address, shipping_address do |f| %>
+      <%= render "shift_commerce/rails/shared/common_address_fields", f: f, countries: shipping_countries %>
+  <% end %>
+</div>

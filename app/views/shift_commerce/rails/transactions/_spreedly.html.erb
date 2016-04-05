@@ -1,0 +1,86 @@
+<div data-behavior="spreedly_form">
+  <script src="https://core.spreedly.com/iframe/iframe-1.2.min.js"></script>
+  <form class="container-fluid" id="payment-form" action="<%= new_from_spreedly_cart_transactions_path %>" onsubmit='submitPaymentForm(); return false;'>
+    <div class="row">
+      <div class="col-lg-4 col-lg-offset-4">
+        <div class="form-group">
+          <label for="full_name">Name</label>
+          <input type="text" class="form-control" id="full_name" name="payment_setup[full_name]"><br/>
+        </div>
+
+        <div class="form-group">
+          <label>Credit Card Number</label>
+          <div id="spreedly-number" class="form-control"></div><br/>
+        </div>
+
+        <div class="form-group">
+          <label for="spreedly-exp-month">Expiration Date (Month)</label>
+          <select id="month" name="payment_setup[month]" class="form-control">
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <label for="spreedly-exp-year">Expiration Date (Year)</label>
+          <select id="year" name="payment_setup[year]" class="form-control">
+            <% (Date.today.year..Date.today.year+10).each do |year| %>
+                <option value="<%= year %>"><%= year %></option>
+            <% end %>
+          </select>
+
+        </div>
+
+        <div class="form-group">
+          <label>CVV</label>
+          <div id="spreedly-cvv" class="form-control"></div><br/>
+        </div>
+
+        <input class="btn btn-sm btn-success" id="submit-button" type="submit" value="Pay Now" disabled>
+        <input type="hidden"  name="payment_setup[payment_method_token]" id="payment_method_token">
+
+      </div>
+    </div>
+
+    <!-- This script must be inlined with the relevant data attributes present -->
+    <script
+    id="spreedly-iframe"
+    data-environment-key="<%= environment_key %>"
+    data-number-id="spreedly-number"
+    data-cvv-id="spreedly-cvv">
+      function submitPaymentForm() {
+
+        // These are the fields whose values we want to transfer *from* the
+        // master form *to* the payment frame form.
+        var paymentMethodFields = ['full_name', 'month', 'year'];
+        options = {};
+        for(var i = 0; i < paymentMethodFields.length; i++) {
+          var field = paymentMethodFields[i];
+          options[field] =  document.getElementById(field).value;
+        }
+        Spreedly.tokenizeCreditCard( options );
+      }
+      Spreedly.on('paymentMethod', function(token, pmData) {
+        var tokenField = document.getElementById("payment_method_token");
+        tokenField.setAttribute("value", token);
+        var masterForm = document.getElementById('payment-form');
+        masterForm.submit();
+      });
+      Spreedly.on('errors', function (errors) {
+        debugger;
+      });
+      Spreedly.on('ready', function() {
+        document.getElementById("submit-button").removeAttribute('disabled');
+      });
+      Spreedly.init();
+    </script>
+
+  </form>
+</div>

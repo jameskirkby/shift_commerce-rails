@@ -1,0 +1,59 @@
+I"(
+(function() {
+  var getAllowEditSection;
+
+  getAllowEditSection = function(scope) {
+    var checkBoxName;
+    checkBoxName = "allow_edit_" + (scope.replace('checkout_', ''));
+    return $("*[data-behavior='checkout_view'] *[data-behavior='address'] *[data-action='" + checkBoxName + "']");
+  };
+
+  $(document).on('ready page:load', function(event) {
+    var ref, ref1;
+    if ((ref = getAllowEditSection("checkout_shipping_address")) != null) {
+      ref.hide();
+    }
+    if ((ref1 = getAllowEditSection("checkout_billing_address")) != null) {
+      ref1.hide();
+    }
+    $("*[data-behavior='checkout_view'] *[data-behavior='address'] *[data-action='select_saved_address']").on('change', function(event) {
+      var ref2, scope;
+      if (this.value === "") {
+        scope = this.attributes['data-scope'].value;
+        $("*[data-behavior='" + scope + "'] *[data-address-field]").val("").prop('disabled', false);
+        return (ref2 = getAllowEditSection(scope)) != null ? ref2.hide() : void 0;
+      } else {
+        return $.ajax("/account/addresses/" + this.value + ".json", {
+          success: (function(_this) {
+            return function(wrapper, status, jqXHR) {
+              var ref3, ref4;
+              if ((ref3 = getAllowEditSection(_this.attributes['data-scope'].value)) != null) {
+                if ((ref4 = ref3.show()) != null) {
+                  ref4.find("input[type='checkbox']").attr('checked', false);
+                }
+              }
+              return $.each(wrapper.data.attributes, function(attr, value) {
+                return $("*[data-behavior='" + _this.attributes['data-scope'].value + "'] *[name$='[" + attr + "]']").val(value).prop('disabled', true);
+              });
+            };
+          })(this),
+          error: function(jqXHR, status, error) {
+            return alert("An error occured of type '" + status + "' - desription '" + error + "'");
+          }
+        });
+      }
+    });
+    $("*[data-behavior='checkout_view'] *[data-behavior='address'] *[name='cart[allow_edit_billing_address]']").on('change', function(event) {
+      var disabled;
+      disabled = !this.checked;
+      return $("*[data-behavior='checkout_billing_address'] *[data-address-field]").prop('disabled', disabled);
+    });
+    return $("*[data-behavior='checkout_view'] *[data-behavior='address'] *[name='cart[allow_edit_shipping_address]']").on('change', function(event) {
+      var disabled;
+      disabled = !this.checked;
+      return $("*[data-behavior='checkout_shipping_address'] *[data-address-field]").prop('disabled', disabled);
+    });
+  });
+
+}).call(this);
+:ET

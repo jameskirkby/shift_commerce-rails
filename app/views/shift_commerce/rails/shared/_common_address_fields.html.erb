@@ -1,0 +1,50 @@
+<div class="form-group">
+  <%= f.label(:first_name, required: true) %>
+  <%= f.text_field :first_name, autocapitalize: "off", required: true, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :first_name, data: { behavior: :first_name_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:middle_names, required: false) %>
+  <%= f.text_field :middle_names, autocapitalize: "off", required: false, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :middle_names, data: { behavior: :middle_names_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:last_name, required: true) %>
+  <%= f.text_field :last_name, autocapitalize: "off", required: true, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :last_name, data: { behavior: :last_name_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:address_line_1, required: true) %>
+  <%= f.text_field :address_line_1, autocapitalize: "off", required: true, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :address_line_1, data: { behavior: :address_line_1_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:address_line_2, required: false) %>
+  <%= f.text_field :address_line_2, autocapitalize: "off", required: false, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :address_line_2, data: { behavior: :address_line_2_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:address_line_3, required: false) %>
+  <%= f.text_field :address_line_3, autocapitalize: "off", required: false, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :address_line_3, data: { behavior: :address_line_3_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:city, required: true) %>
+  <%= f.text_field :city, autocapitalize: "off", required: true, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :city, data: { behavior: :city_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:state, required: true) %>
+  <%= f.text_field :state, autocapitalize: "off", required: true, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :state, data: { behavior: :state_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:country, required: true) %>
+  <%= f.select :country, countries.collect { |country| [country.name, country.code ] }, { include_blank: t(".choose_country") }, class: "form-control", data: { address_field: true } %>
+  <%= f.error :country, data: { behavior: :country_field_error } %>
+</div>
+<div class="form-group">
+  <%= f.label(:postcode, required: true) %>
+  <%= f.text_field :postcode, autocapitalize: "off", required: true, spellcheck: "false", class: "form-control", size: "30", data: { address_field: true } %>
+  <%= f.error :postcode, data: { behavior: :postcode_field_error } %>
+</div>

@@ -24,7 +24,7 @@ module ShiftCommerce
       private
       
       def is_a_flex_exception?
-        @exception.exception.is_a? ::FlexCommerce::Error::Base
+        # @exception.exception.is_a? ::FlexCommerce::Error::Base
       end
     end
   end

@@ -1,0 +1,17 @@
+<div class="container-fluid" data-behavior="account_reset_password_request_view">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+      <h1>Reset Password Request</h1>
+      <%= simple_form_for(:reset, url: url_for(action: :create, only_path: true), as: :reset) do |f| %>
+          <div class="form-group">
+            <%= f.label(:email, "Email", class: "sr-only") %>
+            <%= f.email_field :email, placeholder: "Email", autocapitalize: "off", spellcheck: "false", class: "form-control" %>
+            <%= f.error :email, data: { behavior: :email_field_error } %>
+          </div>
+          <footer class="reset_password_form__footer">
+            <%= f.submit t(".submit_button"), class: "btn btn-primary btn-block", data: { behavior: "reset_password_request_button" }  %>
+          </footer>
+      <% end %>
+    </div>
+  </div>
+</div>

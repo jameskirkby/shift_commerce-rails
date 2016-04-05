@@ -1,0 +1,93 @@
+<header class="row">
+  <div class="col-xs-12 col-sm-6">
+    <h1 class="pull-sm-left"><%= t(".order_title") %></h1>
+  </div>
+</header>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+        <tr>
+          <th colspan="2"><%= t(".item_header") %></th>
+          <th><%= t(".reference_header") %></th>
+          <th><%= t(".price_header") %></th>
+          <th><%= t(".quantity_header") %></th>
+          <th><%= t(".total_header") %></th>
+        </tr>
+    </thead>
+    <tbody>
+    <% cart.line_items.each do |line_item| %>
+        <tr data-behavior="cart_line_item">
+          <td>
+            <a href="/products/essentials-sonar-large-sink-cabinet-wall-cabinet-and-mirror-furniture-bundle">
+              <img src="//cdn.shopify.com/s/files/1/0845/2185/products/FSO003_7b67c04f-bf52-41e8-9d3b-0c5d7fc2ffcd_small.png?v=1436864683" srcset="//cdn.shopify.com/s/files/1/0845/2185/products/FSO003_7b67c04f-bf52-41e8-9d3b-0c5d7fc2ffcd_thumb.png?v=1436864683 2x">
+            </a>
+          </td>
+          <th data-attribute="title">
+            <%= line_item.title %>
+          </th>
+          <td data-attribute="reference">
+            "reference"
+          </td>
+          <td data-attribute="unit_price">
+            <%= number_to_currency(line_item.unit_price) %>
+          </td>
+          <td>
+            <span class="basket-quantity">
+                <span class="basket-quantity__value" data-attribute="unit_quantity">
+                    <%= line_item.unit_quantity %>
+                </span>
+            </span>
+          </td>
+          <td data-attribute="total">
+            <%= number_to_currency(line_item.sub_total) %>
+          </td>
+        </tr>
+    <% end %>
+    <% cart.discount_summaries.each do |summary| %>
+        <tr data-behavior="cart_discount_summary">
+          <td></td>
+          <td colspan="2" data-attribute="name"><%= summary.name %></td>
+          <td data-attribute="total"><%= number_to_currency(summary.total)  %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="row" data-behavior="cart_summary">
+  <div class="col-xs-12 col-sm-3 pull-right">
+    <p>
+      <%= t(".sub_total") %>
+      <span class="pull-right" data-attribute="sub_total">
+        <%= number_to_currency(cart.sub_total) %>
+      </span>
+    </p>
+    <p>
+      <%= t(".total_discount") %>
+      <span class="pull-right" data-attribute="total_discount">
+        -<%= number_to_currency(cart.total_discount) %>
+      </span>
+    </p>
+    <p>
+      <%= t(".shipping_total") %>
+      <span class="pull-right" data-attribute="total_discount">
+        <%= number_to_currency(cart.shipping_total) %>
+      </span>
+    </p>
+    <% if cart.free_shipping %>
+    <p>
+      <%= t(".free_shipping_discount") %>
+      <span class="pull-right" data-attribute="total_discount">
+        <%= number_to_currency(cart.shipping_total_discount) %>
+      </span>
+    </p>
+    <% end %>
+    <p>
+      <strong><%= t(".total") %></strong>
+      <span class="pull-right" data-attribute="total">
+        <%= number_to_currency(cart.total) %>
+      </span>
+    </p>
+  </div>
+</div>

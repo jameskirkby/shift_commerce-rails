@@ -1,0 +1,20 @@
+<% products.each do |product| %>
+    <div class="col-xs-4" data-product-id="<%= product.id %>">
+      <h4>
+        <a href="<%= url_for(action: :show, controller: :products, id: product.slug, only_path: true) %>"><%= product.title %></a>
+      </h4>
+      <a href="<%= url_for(action: :show, controller: :products, id: product.slug, only_path: true) %>">
+        <div>
+          <% if product.picture_url.present? %>
+              <%= ix_picture_tag(product.picture_url, { w: 200, h: 100, fit: 'fit', fm: 'jpg',bg: "ffffff", auto: "format" }) %>
+          <% else %>
+              <%= image_tag("http://placehold.it/200x100") %>
+          <% end %>
+        </div>
+        <p>
+          <%= t(".on_sale_from", amount: number_to_currency(product.min_price)) %>
+        </p>
+      </a><!-- /product -->
+
+    </div>
+<% end %>

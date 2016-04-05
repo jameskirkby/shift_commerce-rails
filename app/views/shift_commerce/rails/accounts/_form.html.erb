@@ -1,0 +1,5 @@
+<div class="form-group">
+  <%= f.label(:email, class: "sr-only", required: true) %>
+  <%= f.email_field :email, placeholder: "Email", autocapitalize: "off", spellcheck: "false", data: {autofocus: "true", backup: "customer_email"}, class: "form-control" %>
+  <%= f.error :email, data: { behavior: :email_field_error } %>
+</div>

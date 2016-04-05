@@ -1,0 +1,38 @@
+<div data-behavior="category_view_for_example_template" class="container-fluid products_list">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="title"><%= category.title %></h1>
+      <p><%= category.description %></p>
+      <div>
+        <p>This is a custom template for the "Category" template definition and has "colour" and "size" added to it</p>
+        <h4>Colour:</h4>
+        <span data-attribute="colour"><%= category.template_attributes.fetch(:colour, "not set").html_safe %></span>
+        <h4>Size</h4>
+        <span data-attribute="size"><%= category.template_attributes.fetch(:size, "not set") %></span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <% if products && products.meta && products.meta.attributes["facets"].size > 0 %>
+        <div class="col-xs-2 facets">
+          <%= render partial: "shift_commerce/rails/shared/facets_search_form", locals: { products: products } %>
+        </div>
+    <% end %>
+
+    <div class="col-xs-10">
+
+      <div class="row">
+        <div data-behavior="results" class="col-xs-12 col-sm-8 col-md-9">
+          <% if products.empty? %>
+              <p><%= t("categories.show.empty_products") %></p>
+          <% end %>
+
+          <%= render partial: "shift_commerce/rails/shared/product_list", locals: { products: products } %>
+        </div>
+      </div> <!-- row -->
+    </div>
+  </div>
+</div>

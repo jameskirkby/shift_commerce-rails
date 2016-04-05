@@ -1,0 +1,55 @@
+<div data-behavior="account_addresses_index_view" class="container-fluid">
+  <div class="row">
+    <div class="col-xs-4">
+      <%= link_to t(".new_address"), { action: :new }, class: "btn btn-primary" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>First name</th>
+          <th>Middle names</th>
+          <th>Last name</th>
+          <th>Address</th>
+          <th>Post Code</th>
+          <th>Action</th>
+          <th>Default ?</th>
+        </tr>
+        </thead>
+        <% addresses.each do |address|  %>
+        <tr data-behavior="address" <%= address.preferred_shipping ? "data-preferred-shipping" : "" %> <%= address.preferred_billing ? "data-preferred-billing" : "" %>>
+          <td><%= address.first_name %></td>
+          <td><%= address.middle_names %></td>
+          <td><%= address.last_name %></td>
+          <td><%= address.address_line_1 %></td>
+          <td><%= address.postcode %></td>
+          <td>
+            <%= link_to t(".edit_button"), { action: :edit, id: address.id }, class: "btn-xs btn-primary", data: { action: :edit } %>
+            <%= link_to t(".delete_button"), { action: :destroy, id: address.id }, method: :delete, class: "btn-xs btn-danger", data: { confirm: t(".delete_confirmation") , action: :delete } %>
+          </td>
+          <td>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xs-6">Shipping</div>
+                <div class="col-xs-6">Billing</div>
+              </div>
+              <div class="row">
+                <%= simple_form_for address, url: url_for(action: :update, id: address.id), as: :address, html: { class: "col-xs-6" } do |f| %>
+                    <%= f.hidden_field :preferred_shipping, value: true %>
+                    <button class="btn-xs btn-default" data-action="set_preferred_shipping"><span class="glyphicon glyphicon-<%= address.preferred_shipping ? "check" : "unchecked" %>"></span></button>
+                <% end %>
+                <%= simple_form_for address, url: url_for(action: :update, id: address.id), as: :address, html: { class: "col-xs-6" } do |f| %>
+                    <%= f.hidden_field :preferred_billing, value: true %>
+                    <button class="btn-xs btn-default" data-action="set_preferred_billing"><span class="glyphicon glyphicon-<%= address.preferred_billing ? "check" : "unchecked" %>"></span></button>
+                <% end %>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>

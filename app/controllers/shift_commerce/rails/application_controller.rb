@@ -2,9 +2,9 @@ require "flex_commerce_api/api_base"
 
 module ShiftCommerce
   module Rails
-    class ApplicationController < ApplicationController::Base
-      # include HoldingPageProtection
-      # include NotFoundRedirects
+    class ApplicationController < ActionController::Base
+      include ShiftCommerce::Rails::Concerns::HoldingPageProtection
+      include ShiftCommerce::Rails::Concerns::NotFoundRedirects
 
       FASTLY_ORIGINAL_HOST = "HTTP_FASTLY_ORIG_HOST"
       # Prevent CSRF attacks by raising an exception.
@@ -63,7 +63,7 @@ module ShiftCommerce
 
       # this overrides NotFoundRedirects#handle_not_found to provide site-wide nice 404 pages
       def handle_not_found(exception = nil)
-        render "shared/not_found", status: 404
+        render "shift_commerce/rails/shared/not_found", status: 404
       end
 
       protected

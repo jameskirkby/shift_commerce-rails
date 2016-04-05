@@ -1,0 +1,87 @@
+<div class="container-fluid product_show" data-behavior="product_view">
+  <section>
+    <div class="row">
+      <ol class="breadcrumb">
+        <% breadcrumb_for(product, "sidebar") do |breadcrumb_item| %>
+            <li><a href="#"><%= breadcrumb_item.title %></a></li>
+        <% end %>
+      </ol>
+      <div class="col-xs-8">
+        <!-- heading -->
+        <h1 class="heading__inner__title" data-attribute="title"><%= product.title %></h1>
+        <!-- /heading -->
+        <section>
+          <div>
+            <% if product.asset_files[0] && product.asset_files[0].s3_url.present? %>
+                <%= ix_picture_tag(product.asset_files[0].s3_url, { w: 580, h: 300, fit: 'fit', fm: 'jpg',bg: "ffffff", auto: "format" }) %>
+            <% else %>
+                <%= image_tag("http://placehold.it/580x300") %>
+            <% end %>
+          </div>
+        </section>
+      </div>
+      <div class="col-xs-4">
+        <section>
+          <div>
+            <h2><%= product.title %></h2>
+
+            <!-- price -->
+            <h3 data-product-attribute="price">
+              <%= number_to_currency(variant.price) %>
+            </h3>
+            <!-- price end-->
+
+
+            <!-- availability -->
+            <p>
+                <span data-product-attribute="stock">
+                    <%= product_stock_level_for(product) %> in stock
+                </span>
+            </p>
+            <!-- availability end -->
+
+            <!-- description  -->
+            <article>
+              <p><%= product.description %><a href="#product-description">read more.</a></p>
+            </article>
+            <!-- description end -->
+          </div>
+          <% if product_stock_level_for(product) > 0 %>
+            <%= render 'add_to_basket_form' %>
+
+          <% else %>
+            <%= render 'ewis_form' %>
+          <% end %>
+        </section>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="subtitle"><%= t(".description") %></h2>
+        <article itemprop="description" data-product-attribute="description">
+          <%= product.description %>
+        </article>
+      </div>
+      <div class="col-xs-12">
+        <h2 class="subtitle"><%= t(".specifications") %></h2>
+        <div>
+          <dl class="row">
+            <dt>SKU</dt>
+            <dd itemprop="sku"><%= product.sku %></dd>
+            <% product.meta_attributes.each do |key, data| %>
+              <dt><%= key %></dt>
+              <dd>
+                <% if data[:value].blank? %>
+                  &mdash;
+                <% else %>
+                  <%= data[:value] %>
+                <% end %>
+              </dd>
+            <% end %>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

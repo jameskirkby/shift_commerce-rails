@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= page_title %></title>
+  <%= javascript_include_tag 'shift_commerce/rails/application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'shift_commerce/rails/application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<%= render partial: "shift_commerce/rails/shared/header" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <%= render partial: "shift_commerce/rails/shared/nav" %>
+    </div>
+  </div>
+  <div class="row">
+    <main class="col-xs-10">
+      <%= render partial: "shift_commerce/rails/shared/flash_messages" %>
+      <%= yield %>
+    </main>
+  </div>
+  <div class="row">
+    <%= render partial: "shift_commerce/rails/shared/footer" %>
+  </div>
+</div>
+</body>
+</html>

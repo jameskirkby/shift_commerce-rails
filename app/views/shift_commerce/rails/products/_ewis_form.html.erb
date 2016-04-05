@@ -1,0 +1,16 @@
+<%= simple_form_for(ewis_opt_in, url: ewis_opt_ins_path, class: "ewis__form", data: { behaviour: "create_ewis_opt_in" }) do |f| %>
+  <div class="form-group">
+    <div data-behavior="product_variant_selector">
+      <%= f.label(:variant_id, t(".variant")) %>
+      <%= f.select(:variant_id, product.variants.map { |v| ["#{v.title} - #{number_to_currency(v.price)}", v.id] }) %>
+      <% if current_account %>
+        <%= f.hidden_field :customer_account_id, value: current_account.id %>
+      <% else %>
+        <%= f.email_field :email, placeholder: 'email' %>
+        <%= f.text_field :first_name, placeholder: 'first name' %>
+        <%= f.text_field :last_name, placeholder: 'last name' %>
+      <% end %>
+    </div>
+  </div>
+  <%= f.submit value: t("products.show.ewis_button"), class: "btn btn-lg btn-block btn-primary", data: { action: "subscribe" } %>
+<% end %>

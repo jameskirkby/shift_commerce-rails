@@ -18,8 +18,6 @@ module ShiftCommerce
           when "FlexCommerce::Category" then "/categories/web/#{item.slug}"
           else raise "Item #{item.class} is not defined in menu_items helper - so unable to calculate url"
         end
-
-
       end
     end
   end

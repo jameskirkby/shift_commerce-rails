@@ -1,0 +1,54 @@
+<div data-behavior="checkout_view" class="container-fluid">
+  <h1><%= t(".page_title") %></h1>
+  <%= simple_form_for cart, url: url_for(action: :update, only_path: true), as: :cart do |f| %>
+      <div class="row">
+        <h3>Summary</h3>
+        <% cart.line_items.each do |line_item| %>
+        <div class="col-xs-4">
+          <%= line_item.title %>
+        </div>
+        <div class="col-xs-4">
+          <%= line_item.unit_quantity %>
+        </div>
+            <div class="col-xs-4">
+              <% if line_item.errors[:unit_quantity].present? %>
+                  <span data-behavior="stock_warnings"><%= line_item.errors[:unit_quantity].join(" ") %></span>
+              <% else %>
+                  <span>In Stock</span>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <div data-behavior="checkout_billing_address">
+            <%= render "billing_address", f: f, countries: billing_countries %>
+          </div>
+        </div>
+        <div class="col-xs-4 col-xs-offset-4">
+          <div data-behavior="checkout_shipping_address">
+            <%= render "shipping_address", f: f, countries: shipping_countries %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="form-group">
+            <%= f.label(:shipping_method_id, required: true) %>
+            <%= f.select :shipping_method_id, shipping_methods.collect { |shipping_method| ["#{shipping_method.label} #{number_to_currency(shipping_method.price)}", shipping_method.id ] }, { include_blank: t(".choose_shipping_method") }, class: "form-control" %>
+            <%= f.error :shipping_method_id, data: { behavior: :shipping_method_id_field_error } %>
+          </div>
+        </div>
+        <% unless current_account.present? %>
+        <div class="col-xs-6">
+          <div class="form-group">
+            <%= f.label(:email, required: true) %>
+            <%= f.email_field :email, autocapitalize: "off", required: true, spellcheck: "false", class: "form-control", size: "30" %>
+            <%= f.error :email, data: { behavior: :email_field_error } %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <%= f.submit t(".submit_button"), class: "btn btn-primary", data: { behavior: "submit" }, disabled: checkout_disabled  %>
+  <% end %>
+</div>

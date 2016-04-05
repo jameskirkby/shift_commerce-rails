@@ -1,0 +1,21 @@
+<header data-behavior="header">
+  <div class="container-fluid">
+    <nav class="navbar navbar-default">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only"><%= t(".toggle_navigation") %></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Brand</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <%= render partial: "shift_commerce/rails/shared/search" %>
+        <%= render partial: "shift_commerce/rails/shared/mini_basket" %>
+        <%= render partial: "shift_commerce/rails/shared/account" %>
+      </ul>
+    </nav>
+  </div>
+</header>

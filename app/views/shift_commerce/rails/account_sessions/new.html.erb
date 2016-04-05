@@ -1,0 +1,28 @@
+<div class="container-fluid" data-behavior="account_login_view">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+      <h1><%= t(".page_title") %></h1>
+      <%= simple_form_for(account, url: url_for(action: :create, only_path: true), as: :account) do |f| %>
+          <div class="form-group">
+            <%= f.label(:email, class: "sr-only", required: true) %>
+            <%= f.email_field :email, placeholder: "person@example.com", autocapitalize: "off", required: true, spellcheck: "false", class: "form-control", size: "30" %>
+            <%= f.error :email, data: { behavior: :email_field_error } %>
+          </div>
+          <div class="form-group">
+            <%= f.label(:password, class: "sr-only", required: true) %>
+            <%= f.password_field :password, placeholder: "Enter your password", class: "form-control", required: true, autocomplete: "off" %>
+            <%= f.error :password, data: { behavior: :password_field_error } %>
+          </div>
+          <footer class="container-fluid">
+            <div class="row">
+              <%= f.submit value: t(".sign_in"), class: "btn btn-primary col-xs-12", data: { behavior: "login_button" } %>
+            </div>
+            <div class="row panel-body">
+              <%= link_to t(".forgotten_password"), reset_password_request_account_path, class: "btn btn-sm btn-info" %>
+              <%= link_to t(".register"), new_account_path, class: "btn btn-sm btn-info pull-right" %>
+            </div>
+          </footer>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -21,6 +21,10 @@ module ShiftCommerce
         core_attrs = ["title", "description", "min_price", "max_price", "slug", "reference", "relationships", "id", "type", "links"]
         product.attributes.reject {|key| core_attrs.include?(key.to_s) }
       end
+
+      def facet_checkbox_name(facet_name:, attribute_name: )
+        "[facet_filter][#{facet_name}][#{attribute_name}]"
+      end
     end
   end
 end

@@ -1,0 +1,19 @@
+<%= form_tag(nil, method: "get", name:"facets") do %>
+    <%= hidden_field_tag :q, params[:q] if params[:q] %>
+
+    <h5>Filter By</h5>
+
+    <ul>
+      <% products.meta.attributes["facets"].each do |facet| %>
+        <li>
+          <% if facet["label"] == "Price" %>
+            <%= render 'shift_commerce/rails/shared/facet_filters/range_filter', facet: facet %>
+          <% else %>
+            <% next unless facet["variants"].any? %>
+            <%= render 'shift_commerce/rails/shared/facet_filters/checkbox_filter', facet: facet %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <%= submit_tag("Search") %>
+<% end %>

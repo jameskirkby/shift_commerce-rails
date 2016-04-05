@@ -1,0 +1,8 @@
+<strong><%= facet["label"] %></strong><br />
+<% facet["variants"].each do |variant| %>
+  <%= check_box_tag  facet_checkbox_name(facet_name: facet["source"] , attribute_name: variant["key"]), :on, 
+        (params[:facet_filter][facet["source"]][variant["key"].to_s] == "on" rescue nil) %>
+  <%= content_tag :span, variant["key"], class: "variant-key" %> (<%= variant["doc_count"] %>)
+  <br />
+<% end %>
+

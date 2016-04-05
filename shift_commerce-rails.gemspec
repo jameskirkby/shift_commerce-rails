@@ -18,9 +18,13 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+  spec.test_files = Dir["spec/**/*"]
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec-rails", "~> 3.3"
   spec.add_runtime_dependency "activemerchant", "~> 1.54"
+  spec.add_runtime_dependency "flex_commerce_api"
+  spec.add_runtime_dependency "shift_commerce-ui_payment_gateway"
+  spec.add_runtime_dependency "shift_commerce-secure_trading"
 end

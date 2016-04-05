@@ -1,0 +1,46 @@
+<div data-behavior="new_transaction_view">
+  
+  <%= render partial: 'cart', object: cart %>
+  
+  <header class="row">
+    <div class="col-xs-12 col-sm-6">
+      <h1 class="pull-sm-left"><%= t(".page_title") %></h1>
+    </div>
+  </header>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <h3>Please choose a payment type</h3>
+      </div>
+    </div>
+    <div class="row">
+      <!-- @TODO Make this so it works with more than one payment provider that isnt spreedly !! -->
+      <% payment_providers.each do |payment_provider| %>
+      <div class="col-xs-3 col-sm-offset-3">
+        <%= link_to "Spreedly", "#" ,class: "btn btn-sm btn-info", data: { action: :select_spreedly } %>
+      </div>
+      <% end %>
+      <div class="col-xs-3">
+        <%= link_to "Secure Trading", "#" ,class: "btn btn-sm btn-info", data: { action: :select_secure_trading } %>
+      </div>
+      <div class="col-xs-3">
+        <%= link_to "Paypal", url_for(action: :new_with_gateway, gateway: :paypal, only_path: true) ,class: "btn btn-sm btn-info", data: { action: :select_paypal } %>
+      </div>
+    </div>
+    <% payment_providers.each do |payment_provider| %>
+    <div class="row">
+      <div class="col-xs-12">
+        <!-- @TODO Refactor -->
+        <%= render "spreedly", environment_key: payment_provider.setup.meta_attributes[:environment_key] %>
+      </div>
+    </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-xs-12 embed-responsive embed-responsive-16by9">
+        <iframe data-behavior="secure_trading_form" name="secure_trading_iframe" class="embed-responsive-item" src="<%= url_for_secure_trading_page(cart: open_cart, redirect_url: new_from_secure_trading_cart_transactions_url, declined_redirect_url: declined_from_secure_trading_cart_transactions_url) %>"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>

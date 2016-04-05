@@ -1,0 +1,10 @@
+<div class="container-fluid" data-behavior="account_new_address_view">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+      <h1><%= t(".page_title") %></h1>
+      <%= simple_form_for(address, url: url_for(action: :create, only_path: true), as: :address) do |f| %>
+          <%= render "form", f: f, countries: countries %>
+      <% end %>
+    </div>
+  </div>
+</div>
