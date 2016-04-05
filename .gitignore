@@ -1,2 +1,3 @@
 .idea/workspace.xml
-shift_commerce-rails/spec/dummy/.env
+spec/dummy/.env
+spec/dummy/tmp
