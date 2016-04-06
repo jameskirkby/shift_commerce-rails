@@ -8,7 +8,7 @@ RSpec.feature "Login Page Specs", type: :feature, js: true do
   context "Logging in" do
     let!(:registered_account) { create(:account, :registered) }
     let(:login_view) { subject.view }
-    # after(:each) { registered_account.destroy } @TODO Will be enabled once CRUD is done in API
+    after(:each) { registered_account.destroy rescue nil }
     it "should have a registration widget" do
       expect(login_view).to be_present
     end
@@ -20,9 +20,9 @@ RSpec.feature "Login Page Specs", type: :feature, js: true do
     end
 
     context "with a guest cart" do
-      let!(:products) { FlexCommerce::Product.paginate(per_page: 10, page: 1).all }
-      let(:guest_variants) { products[0..2].map { |p| FlexCommerce::Product.find(p.slug).variants.first } }
-      let(:customer_variants) { products[5..7].map { |p| FlexCommerce::Product.find(p.slug).variants.first } }
+      let!(:products) { FlexCommerce::Product.where(filter: {"in_stock" => {"eq" => true}}).paginate(per_page: 10, page: 1).all }
+      let(:guest_variants) { products[0..2].map { |p| FlexCommerce::Product.find("slug:#{p.slug}").variants.first } }
+      let(:customer_variants) { products[5..7].map { |p| FlexCommerce::Product.find("slug:#{p.slug}").variants.first } }
 
       let!(:guest_cart) { mock_server.create_basket variants: guest_variants }
       let!(:customer_cart) { create(:cart, variants: customer_variants, customer_account_id: registered_account.id) }

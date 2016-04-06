@@ -1,5 +1,10 @@
 require "capybara/rspec"
+require "capybara/rails"
 require 'capybara/poltergeist'
+require 'rack_session_access'
+require 'rack_session_access/capybara'
+
+Capybara.app = ShiftCommerce::Rails::Engine
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, {js_errors: false})
@@ -18,5 +23,5 @@ Capybara.configure do |config|
   config.javascript_driver = driver
   config.always_include_port = true
   config.server_port = 23456
-  config.default_max_wait_time = 5
+  config.default_wait_time = 5
 end

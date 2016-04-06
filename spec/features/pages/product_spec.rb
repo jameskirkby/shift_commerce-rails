@@ -4,9 +4,9 @@ RSpec.feature "Product Specs", type: :feature, js: true do
   include ActiveSupport::NumberHelper
   include_context "global pages context"
   let!(:products) {
-    ::FlexCommerce::Product.includes(:variants).paginate(per_page: 10, page: 1).all
+    ::FlexCommerce::Product.where(filter: {"in_stock" => {"eq" => true}}).includes(:variants).paginate(per_page: 10, page: 1).all
   }
-  let(:product) { ::FlexCommerce::Product.find(products.first.slug) }
+  let(:product) { ::FlexCommerce::Product.find("slug:#{products.first.slug}") }
   subject { page_object_for("product", product: product).visit }
   it_should_behave_like "any site page" # Verifies common requirements across all pages
 
@@ -65,7 +65,7 @@ RSpec.feature "Product Specs", type: :feature, js: true do
     end
   end
   context "a product with a template definition and template attributes" do
-    let(:product) { ::FlexCommerce::Product.find("seed_product_12") }
+    let(:product) { ::FlexCommerce::Product.find("slug:seed_product_12") }
     # We wouldn't normally have selenium type of things in here - it should be done in the
     # page objects, however, in this case, the html that we are testing for is really part
     # of the test itself, so it is quite valid - as we are testing to make sure the HTML output

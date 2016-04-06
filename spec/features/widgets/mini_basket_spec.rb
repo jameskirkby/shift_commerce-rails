@@ -9,8 +9,8 @@ RSpec.feature "Widgets::MiniBasket", type: :feature, js: true do
   let(:cart_page) { page_object_for("cart").attach }
   let(:checkout_page) { page_object_for("checkout").attach }
   # @TODO Paginate this - to only fetch th number of variants that are needed and error if not enough
-  let!(:products) { FlexCommerce::Product.paginate(per_page: 5, page: 1).all }
-  let(:variant_list) { products[0..3].map { |p| FlexCommerce::Product.find(p.slug).variants.first } }
+  let!(:products) { FlexCommerce::Product.where(filter: {"in_stock" => {"eq" => true}}).paginate(per_page: 5, page: 1).all }
+  let(:variant_list) { products[0..3].map { |p| FlexCommerce::Product.find("slug:#{p.slug}").variants.first } }
 
   # Here, we define the subject under test which is the mini basket
   # If the mini basket is not located in the header on the starting page, change to suit.

@@ -13,8 +13,8 @@ RSpec.feature "Cart Specs", type: :feature, js: true do
     end
   end
   context "with 10 entries in cart" do
-    let!(:products) { FlexCommerce::Product.paginate(per_page: 10, page: 1).all }
-    let(:variants) { products[0..9].map { |p| FlexCommerce::Product.find(p.slug).variants.first } }
+    let!(:products) { FlexCommerce::Product.where(filter: {"in_stock" => {"eq" => true}}).paginate(per_page: 10, page: 1).all }
+    let(:variants) { products[0..9].map { |p| FlexCommerce::Product.find("slug:#{p.slug}").variants.first } }
     context "basic cart" do
       let!(:cart) { mock_server.create_basket variants: variants }
       it "should show 10 items" do

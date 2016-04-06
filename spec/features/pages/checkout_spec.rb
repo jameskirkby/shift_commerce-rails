@@ -12,8 +12,8 @@ RSpec.feature "Checkout Specs", type: :feature, js: true do
   let(:view) { subject.view }
   it_should_behave_like "any site page" # Verifies common requirements across all pages
   describe "with items in the cart" do
-    let!(:products) { FlexCommerce::Product.paginate(per_page: 10, page: 1).all }
-    let(:variants) { products[0..9].map { |p| FlexCommerce::Product.find(p.slug).variants.first } }
+    let!(:products) { FlexCommerce::Product.where(filter: {"in_stock" => {"eq" => true}}).paginate(per_page: 10, page: 1).all }
+    let(:variants) { products[0..9].map { |p| FlexCommerce::Product.find("slug:#{p.slug}").variants.first } }
     context "while logged in" do
       let!(:cart) { mock_server.create_basket variants: variants, customer_account_id: customer_account.id }
       let!(:customer_account) do
@@ -71,7 +71,7 @@ RSpec.feature "Checkout Specs", type: :feature, js: true do
           expect(updated_address.attributes).to include new_address.attributes
           expect(reloaded_cart.billing_address.id).to eql address_to_select.id
           expect(reloaded_cart.shipping_method.id).to eql shipping_method_id
-          expect(reloaded_cart.billing_address.attributes.except(:id, :customer_account_id)).to eql(new_address.attributes)
+          expect(reloaded_cart.billing_address.attributes.except(:id, :customer_account_id, :updated_at, :created_at)).to eql(new_address.attributes)
         end
 
         it "should create a new billing address and use it when the user wishes to use their own" do
@@ -137,7 +137,7 @@ RSpec.feature "Checkout Specs", type: :feature, js: true do
           expect(new_transaction_page).to be_present
           expect(reloaded_cart.shipping_address.id).to eql address_to_select.id
           expect(reloaded_cart.shipping_method.id).to eql shipping_method_id
-          expect(reloaded_cart.shipping_address.attributes.except(:id, :customer_account_id)).to eql(new_address.attributes)
+          expect(reloaded_cart.shipping_address.attributes.except(:id, :customer_account_id, :created_at, :updated_at)).to eql(new_address.attributes)
         end
 
         it "should create a new shipping address and use it when the user wishes to use their own" do

@@ -29,7 +29,7 @@ GIT
 PATH
   remote: .
   specs:
-    shift_commerce-rails (0.2.0)
+    shift_commerce-rails (0.2.1)
       activemerchant (~> 1.54)
       flex_commerce_api
       shift_commerce-secure_trading

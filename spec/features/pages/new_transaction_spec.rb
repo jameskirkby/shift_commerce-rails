@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.feature "New Transaction Spec", type: :feature, js: true, vcr: false, payment: true do
   include_context "global pages context"
-  let!(:products) { FlexCommerce::Product.paginate(per_page: 10, page: 1).all }
-  let(:variants) { products[0..9].map { |p| FlexCommerce::Product.find(p.slug).variants.first } }
+  let!(:products) { FlexCommerce::Product.where(filter: {"in_stock" => {"eq" => true}}).paginate(per_page: 10, page: 1).all }
+  let(:variants) { products[0..9].map { |p| FlexCommerce::Product.find("slug:#{p.slug}").variants.first } }
   let(:shipping_method) { FlexCommerce::ShippingMethod.all.first }
   let(:starting_page) { page_object_for("new_transaction") }
   let(:paypal_page) { page_object_for("paypal_entrance").attach }
@@ -74,7 +74,7 @@ RSpec.feature "New Transaction Spec", type: :feature, js: true, vcr: false, paym
                                        contact_number_type: "M"
       ) }
       let(:secure_trading) { subject.view.secure_trading }
-      let(:variants) { products[0..0].map { |p| FlexCommerce::Product.find(p.slug).variants.first } }
+      let(:variants) { products[0..0].map { |p| FlexCommerce::Product.find("slug:#{p.slug}").variants.first } }
 
       it "should take payment" do
         subject.view.select_secure_trading

@@ -3,14 +3,10 @@
 #
 # Limits access to the site when ENV['SITE_PASSWORD'] is set
 #
-module ShiftCommerce::Rails::Concerns::HoldingPageProtection
-  extend ActiveSupport::Concern
-
-  included do
-    prepend_before_action :handle_holding_page, if: :display_holding_page?
-  end
+module HoldingPageProtection
 
   protected
+  
   def display_holding_page?
     current_site_password.present?
   end

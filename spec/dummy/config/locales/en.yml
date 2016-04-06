@@ -21,3 +21,174 @@
 
 en:
   hello: "Hello world"
+  added_to_basket: "Added to basket"
+  shared:
+    mini_basket:
+      empty_basket: "There are no items in your basket."
+      my_basket: "My Basket"
+      edit_basket: "Edit basket"
+      checkout: "Checkout"
+    account:
+      my_account: "My Account"
+      login: "Login"
+      logout: "Logout"
+      my_addresses: "My Addresses"
+      my_order_history: "Order History"
+    header:
+      toggle_navigation: "Toggle navigation"
+    search:
+      submit_button: "Search"
+    common_address_fields:
+      choose_country: "Choose Country"
+  application_name: "Flex Commerce Reference Application"
+  carts:
+    show:
+      page_title: "Your Shopping Cart"
+      empty: "There are no items in your basket."
+      coupon_applied: "Your coupon has been applied"
+      invalid_coupon: "Invalid coupon code"
+      update: "Updated Cart"
+      decrement: "-"
+      decrement_title: "Remove one"
+      increment: "+"
+      increment_title: "Add one more"
+      total: "Total"
+      sub_total: "Sub Total"
+      reference_header: "Reference"
+      price_header: "Price"
+      quantity_header: "Qty"
+      total_header: "Total"
+      item_header: "Item"
+      total_discount: "Total Discount"
+    edit:
+      page_title: "Checkout"
+      submit_button: "Create Order"
+      choose_shipping_method: "Please select a shipping method"
+    billing_address:
+      choose_billing_address: "I'll enter an address manually"
+    shipping_address:
+      choose_shipping_address: "I'll enter an address manually"
+  number:
+    currency:
+      format:
+        unit: "£"
+  accounts:
+    registered: "You have been registered"
+    new:
+      page_title: "Register Account"
+      register: "Register"
+      forgotten_password: "Forgotten your password?"
+      already_have_account: "Already have an account with us?"
+    edit:
+      page_title: "My Account"
+      updated: "Account Updated"
+      save: "Save"
+    logged_in: "You have been logged in"
+    reset_password_request: "Reset Password Request"
+    reset_password_requested: "An email has been sent to the email address specified.  Please check your email for further instructions."
+    reset_password: "Password Change"
+    password_changed: "Your password has been changed.  You will now need to login"
+  account_sessions:
+    new:
+      page_title: "Account Login"
+      forgotten_password: "Forgotten your password?"
+      register: "Register"
+      sign_in: "Sign In"
+    create:
+      incorrect_email_or_password: "Incorrect email or password"
+    destroy:
+      page_title: "Account Logged Out"
+
+      logged_out_text: "You have been logged out"
+  categories:
+    show:
+      empty_products: "There are no products in this category"
+  products:
+    search:
+      page_title: "Search results for %{search_text}"
+      empty: "Your search returned no results"
+    index:
+      on_sale_from: "On sale from %{amount}"
+    show:
+      variant: "Variant"
+      submit_button: "Add to basket"
+      ewis_button: "Subscribe to email alert"
+      description: "Description"
+      specifications: "Specifications"
+      back: "Back"
+  ewis:
+    subscribed: "You have been subscribed to this product!"
+    not_subscribed: "There was an error please try again"
+  company_name: "Your Company Name"
+  simple_form:
+    labels:
+      cart:
+        coupon_code: "Coupon Code"
+  passwords:
+    new:
+      page_title: "Change Password"
+      submit_button: "Change Password"
+  resets:
+    create:
+      page_title: "Please check email"
+    new:
+      submit_button: "Request Password Reset"
+  addresses:
+    index:
+      page_title: "My Addresses"
+      edit_button: "Edit"
+      preferred_shipping_set: "Preferred Shipping"
+      preferred_billing_set: "Preferred Billing"
+      delete_button: "Delete"
+      delete_confirmation: "Are you sure ?"
+    new:
+      page_title: "New Address"
+    create:
+      created: "Your address has been created"
+    update:
+      updated: "Your address has been updated"
+    edit:
+      page_title: "Edit Address"
+    form:
+      save: "Save"
+    destroy_confirmation:
+      page_title: "Please Confirm Address Deletion"
+    destroy:
+      destroyed: "Your address entry has been deleted"
+  transactions:
+    new:
+      page_title: "Order Payment"
+      payment_declined: "Payment declined"
+    cart:
+      order_title: 'Your Order'
+      reference_header: "Reference"
+      price_header: "Price"
+      quantity_header: "Qty"
+      total_header: "Total"
+      item_header: "Item"
+      total_discount: "Total Discount"
+
+    payment_not_accepted: "Payment Not Accepted"
+  ui_payment_gateway:
+    transactions:
+      new:
+        page_title: "Order Payment"
+  orders:
+    index:
+      show_button: "View"
+      page_title: "Order History"
+    show:
+      page_title: "Confirmation"
+      item_header: "Item"
+      reference_header: "Reference"
+      price_header: "Price"
+      quantity_header: "Quantity"
+      total_header: "Total"
+    confirmation:
+      page_title: "Confirmation"
+      thank_you: "Thank you, your order has been placed"
+      item_header: "Item"
+      reference_header: "Reference"
+      price_header: "Price"
+      quantity_header: "Quantity"
+      total_header: "Total"

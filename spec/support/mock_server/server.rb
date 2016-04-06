@@ -4,20 +4,23 @@
 # This module is being replaced (gradually)
 #
 require "webmock"
-module MyApp
-  module Test
+
+module ShiftCommerce
+  module Rails
     module MockServerHelpers
       def mock_server_instance
-        @mock_server ||= ::MyApp::Test::MockServer.new self
+        @mock_server ||= ::ShiftCommerce::Rails::MockServer.new self
       end
     end
 
     class MockServer
       attr_accessor :basket_helper, :customer_account_helper
+      
       def initialize(parent)
         self.basket_helper = MockServerBasket.new(parent)
         self.customer_account_helper = MockServerCustomerAccount.new(parent)
       end
+
       delegate :create_basket, :line_items_for_cart, :cart_id, :create_promotion_for_all_orders, :delete_all_promotions, :create_coupon, to: :basket_helper
       delegate :get_address_mocks_for, :allow_address_update_for, :allow_address_create_for, :add_addresses_for, :remove_customer_accounts!, :login!, :add_basic_customer_account!, :add_enhanced_customer_account!, to: :customer_account_helper
     end
@@ -25,9 +28,11 @@ module MyApp
     class MockServerBasket
       include FactoryGirl::Syntax::Methods
       attr_accessor :parent
+
       def initialize(parent)
         self.parent = parent
       end
+
       def create_basket(options = {})
         cart = create(:cart, options)
         cart = FlexCommerce::Cart.find(cart.id)
@@ -36,19 +41,24 @@ module MyApp
         Capybara.current_session.set_rack_session session.merge(cart_id: cart.id)
         cart
       end
+      
       def line_items_for_cart(cart_id)
         cart = FlexCommerce::Cart.find(cart_id)
         cart.line_items
       end
+      
       def cart_id
         Capybara.current_session.get_rack_session["cart_id"]
       end
+      
       def create_promotion_for_all_orders
         create(:promotion, :non_coupon, name: '£1.50 off all orders', promotion_type: 'AmountDiscountOnCartRule', active: true, discount_amount: 1.5, starts_at: 1.day.ago)
       end
+      
       def create_coupon
         create(:promotion, :coupon, name: 'A Test Coupon', coupon_code: "coupon1", promotion_type: 'AmountDiscountOnCartRule', active: true, discount_amount: 1.5, starts_at: 1.day.ago)
       end
+      
       def delete_all_promotions
         FlexCommerce::Promotion.all.each do |p|
           p.destroy rescue nil
@@ -60,6 +70,7 @@ module MyApp
       include FactoryGirl::Syntax::Methods
       include WebMock::API
       attr_accessor :parent
+      
       def initialize(parent)
         self.parent = parent
         self.addresses = {}
@@ -138,6 +149,7 @@ module MyApp
     end
   end
 end
+
 RSpec.configure do |config|
-  config.include MyApp::Test::MockServerHelpers
+  config.include ShiftCommerce::Rails::MockServerHelpers
 end
