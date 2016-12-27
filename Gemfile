@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 # Declare your gem's dependencies in shiftcommerce.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
-gem "flex_commerce_api", git: "https://github.com/flex-commerce/flex-ruby-gem.git", tag: 'v0.6.20.2'
+#gem "flex_commerce_api", git: "https://github.com/flex-commerce/flex-ruby-gem.git", tag: 'v0.6.20.2'
+gem "flex_commerce_api", git: "https://github.com/flex-commerce/flex-ruby-gem.git", branch: "hotfix/remove_resource_type_and_slug_from_redirects"
 gemspec
 
 # Declare any dependencies that are still in development here instead of in

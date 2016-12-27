@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/flex-commerce/flex-ruby-gem.git
-  revision: ffa8ba447c28fa8caaf517fd165bf5740e025e97
-  tag: v0.6.20.2
+  revision: 50690552882a557c84325b1b03e026ccf25187c4
+  branch: hotfix/remove_resource_type_and_slug_from_redirects
   specs:
     flex_commerce_api (0.6.20)
       activesupport (>= 4.0)

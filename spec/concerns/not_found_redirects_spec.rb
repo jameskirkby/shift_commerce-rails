@@ -44,11 +44,8 @@ describe ShiftCommerce::NotFoundRedirects, type: :controller do
             "status_code": 301,
             "priority": 0,
             "source_type": "exact",
-            "destination_type": "exact",
             "source_path": "/",
-            "source_slug": "",
             "destination_path": "/somewhere_else",
-            "destination_slug": ""
           }
         },
         meta: {
@@ -75,52 +72,6 @@ describe ShiftCommerce::NotFoundRedirects, type: :controller do
         expect(response.status).to eq(301)
       end
     end
-
-    context 'with a valid resource redirect' do
-      RESOURCE_REDIRECT = {
-        data: {
-          "id": "1",
-          "type": "redirects",
-          "links": {
-            "self": "/testaccount/v1/redirects/1.json_api"
-          },
-          "attributes": {
-            "name": "Redirect Name",
-            "status_code": 301,
-            "priority": 0,
-            "source_type": "exact",
-            "destination_type": "products",
-            "source_path": "/",
-            "source_slug": "",
-            "destination_path": "",
-            "destination_slug": "/products/1"
-          }
-        },
-        meta: {
-          total_entries: 1,
-          page_count: 1
-        },
-        links: []
-      }.to_json.freeze
-
-      before do
-        stub_request(:get, /.*\/testaccount\/v1\/redirects\.json_api/).
-        to_return(status: 200, body: RESOURCE_REDIRECT, headers: { 'Content-Type': 'application/vnd.api+json' })
-      end
-
-      it "should redirect the correct path" do
-        get :index
-
-        expect(response).to redirect_to '/products/1'
-      end
-
-      it "should redirect with the status given in the response" do
-        get :index
-
-        expect(response.status).to eq(301)
-      end
-    end
-
 
     context 'with no redirect' do
       before do
